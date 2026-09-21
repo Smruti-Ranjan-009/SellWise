@@ -1,0 +1,36 @@
+# --- core data / numerics (used throughout A1 preprocessing + U1 training) ---
+numpy
+pandas
+scipy
+
+# --- modeling ---
+scikit-learn      # LabelEncoder, general utilities
+lightgbm          # A1 and U1 both use LightGBM exclusively (Tweedie + quantile objectives)
+
+# --- performance / plumbing used in A1's preprocessing.py and U1's training scripts ---
+psutil            # memory profiling (get_memory_usage, reduce_mem_usage)
+tqdm              # progress bars during feature engineering
+
+# --- exploration (research/ notebooks) ---
+matplotlib
+seaborn
+jupyter
+ipykernel
+
+# --- config-driven project skeleton (bappy's mlProject pattern) ---
+pyyaml
+python-box==6.0.2   # pinned: ConfigBox dot-access used by read_yaml()
+ensure==1.0.2       # pinned: needs Python <3.12, see version note below
+joblib
+
+# --- experiment tracking ---
+mlflow
+
+# --- serving (app.py + templates/index.html) ---
+fastapi
+uvicorn[standard]   # ASGI server to actually run app.py
+jinja2              # needed for FastAPI to render templates/index.html (not bundled, unlike Flask)
+python-multipart    # needed if index.html posts form data (e.g. store_id/item_id inputs) to app.py
+
+# --- installs this project's own src/mlProject package in editable mode ---
+-e .
