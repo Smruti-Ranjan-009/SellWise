@@ -1,0 +1,13 @@
+artifacts_root: artifacts
+
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion
+  source_URL: https://www.dropbox.com/scl/fi/4la98t9l0uqomc6h8uhru/dataset.zip?rlkey=232cm9azvcly3p4tafvcmvx0a&st=ou2dm98p&dl=1
+  local_data_file: artifacts/data_ingestion/data.zip
+  unzip_dir: artifacts/data_ingestion
+  # After unzip, verify these actually match where your CSVs land —
+  # if your zip has a top-level "dataset" folder, they'll be here:
+  calendar_path: artifacts/data_ingestion/dataset/calendar.csv
+  sell_prices_path: artifacts/data_ingestion/dataset/sell_prices.csv
+  sales_path: artifacts/data_ingestion/dataset/sales_train_evaluation.csv
