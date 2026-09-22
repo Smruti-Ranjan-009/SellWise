@@ -10,3 +10,15 @@ class DataIngestionConfig:
     calendar_path: Path
     sell_prices_path: Path
     sales_path: Path
+
+@dataclass(frozen=True)
+class DataPreprocessingConfig:
+    root_dir: Path
+    calendar_path: Path
+    sell_prices_path: Path
+    sales_path: Path
+    grid_part_1: Path
+    grid_part_2: Path
+    grid_part_3: Path
+    lags_df_28: Path
+    mean_encoding_df: Path

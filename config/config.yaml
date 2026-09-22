@@ -3,7 +3,7 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: https://www.dropbox.com/scl/fi/4la98t9l0uqomc6h8uhru/dataset.zip?rlkey=232cm9azvcly3p4tafvcmvx0a&st=ou2dm98p&dl=1
+  source_URL: https://www.dropbox.com/scl/fi/7cnynmgerzpgsab8pqltg/dataset.zip?rlkey=yjvflm222gvbzp4tywprhlfjw&st=39odwnj3&dl=1
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
   # After unzip, verify these actually match where your CSVs land —
@@ -11,3 +11,13 @@ data_ingestion:
   calendar_path: artifacts/data_ingestion/dataset/calendar.csv
   sell_prices_path: artifacts/data_ingestion/dataset/sell_prices.csv
   sales_path: artifacts/data_ingestion/dataset/sales_train_evaluation.csv
+
+
+data_preprocessing:
+  # Matches research_1_preprocessing.py's 5-file output (A1's exact logic)
+  root_dir: artifacts/data_ingestion/processed
+  grid_part_1: artifacts/data_ingestion/processed/grid_part_1.pkl
+  grid_part_2: artifacts/data_ingestion/processed/grid_part_2.pkl
+  grid_part_3: artifacts/data_ingestion/processed/grid_part_3.pkl
+  lags_df_28: artifacts/data_ingestion/processed/lags_df_28.pkl
+  mean_encoding_df: artifacts/data_ingestion/processed/mean_encoding_df.pkl
