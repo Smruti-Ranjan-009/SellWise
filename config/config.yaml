@@ -21,3 +21,10 @@ data_preprocessing:
   grid_part_3: artifacts/data_ingestion/processed/grid_part_3.pkl
   lags_df_28: artifacts/data_ingestion/processed/lags_df_28.pkl
   mean_encoding_df: artifacts/data_ingestion/processed/mean_encoding_df.pkl
+
+
+
+data_validation:
+  root_dir: artifacts/data_validation
+  data_path: artifacts/data_ingestion/processed
+  STATUS_FILE: artifacts/data_validation/status.txt

@@ -1,1 +1,84 @@
-key: val
+COLUMNS:
+  # --- Base Grid (grid_part_1.pkl) ---
+  id: category
+  item_id: category
+  dept_id: category
+  cat_id: category
+  store_id: category
+  state_id: category
+  d: int16
+  sales: float16
+  release: int16
+
+  # --- Price Features (grid_part_2.pkl) ---
+  sell_price: float16
+  price_max: float16
+  price_min: float16
+  price_std: float16
+  price_mean: float16
+  price_norm: float16
+  price_nunique: int16
+  item_nunique: int16
+
+  # --- Calendar & Date Features (grid_part_3.pkl) ---
+  event_name_1: category
+  event_type_1: category
+  event_name_2: category
+  event_type_2: category
+  snap_CA: int8
+  snap_TX: int8
+  snap_WI: int8
+  tm_d: int8
+  tm_w: int8
+  tm_m: int8
+  tm_y: int8
+  tm_wm: int8
+  tm_dw: int8
+  tm_w_end: int8
+
+  # --- Lags & Rolling Statistics (lags_df_28.pkl) ---
+  sales_lag_28: float16
+  sales_lag_29: float16
+  sales_lag_30: float16
+  sales_lag_31: float16
+  sales_lag_32: float16
+  sales_lag_33: float16
+  sales_lag_34: float16
+  sales_lag_35: float16
+  sales_lag_36: float16
+  sales_lag_37: float16
+  sales_lag_38: float16
+  sales_lag_39: float16
+  sales_lag_40: float16
+  sales_lag_41: float16
+  sales_lag_42: float16
+  rolling_mean_7: float16
+  rolling_std_7: float16
+  rolling_mean_14: float16
+  rolling_std_14: float16
+  rolling_mean_30: float16
+  rolling_std_30: float16
+  rolling_mean_60: float16
+  rolling_std_60: float16
+  rolling_mean_180: float16
+  rolling_std_180: float16
+
+  # --- Mean / Target Encodings (mean_encoding_df.pkl) ---
+  enc_state_id_mean: float16
+  enc_state_id_std: float16
+  enc_store_id_mean: float16
+  enc_store_id_std: float16
+  enc_cat_id_mean: float16
+  enc_cat_id_std: float16
+  enc_dept_id_mean: float16
+  enc_dept_id_std: float16
+  enc_item_id_mean: float16
+  enc_item_id_std: float16
+  enc_item_id_state_id_mean: float16
+  enc_item_id_state_id_std: float16
+  enc_item_id_store_id_mean: float16
+  enc_item_id_store_id_std: float16
+
+
+TARGET_COLUMN:
+  name: sales

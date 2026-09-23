@@ -1,6 +1,6 @@
 from SellWise.constants import *
 from SellWise.utils.common import read_yaml, create_directories
-from SellWise.entity.config_entity import (DataIngestionConfig, DataPreprocessingConfig)
+from SellWise.entity.config_entity import (DataIngestionConfig, DataPreprocessingConfig, DataValidationConfig)
 
 class ConfigurationManager:
     def __init__(
@@ -51,3 +51,18 @@ class ConfigurationManager:
             )
     
             return data_preprocessing_config
+
+    def get_data_validation_config(self) -> DataValidationConfig:
+            config = self.config.data_validation
+            schema = self.schema.COLUMNS  # Loads all expected features from schema.yaml
+    
+            create_directories([config.root_dir])
+    
+            data_validation_config = DataValidationConfig(
+                root_dir=Path(config.root_dir),
+                data_path=Path(config.data_path),
+                STATUS_FILE=Path(config.STATUS_FILE),
+                all_schema=schema
+            )
+    
+            return data_validation_config

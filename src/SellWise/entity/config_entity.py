@@ -22,3 +22,14 @@ class DataPreprocessingConfig:
     grid_part_3: Path
     lags_df_28: Path
     mean_encoding_df: Path
+
+
+from dataclasses import dataclass
+from pathlib import Path
+
+@dataclass(frozen=True)
+class DataValidationConfig:
+    root_dir: Path
+    data_path: Path
+    STATUS_FILE: Path
+    all_schema: dict  # Loaded from schema.yaml COLUMNS
