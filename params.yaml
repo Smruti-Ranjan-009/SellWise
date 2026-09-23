@@ -1,1 +1,134 @@
-key: val
+NONRECURSIVE_TRAINING:
+  first_day: 710
+  cv: private
+  early_stopping_rounds: 100   # A1 also had cv1-cv4/public folds available; only 'private' (final 28 days) is used by default
+
+  stores: [CA_1, CA_2, CA_3, CA_4, TX_1, TX_2, TX_3, WI_1, WI_2, WI_3]
+  cats: [HOBBIES, HOUSEHOLD, FOODS]
+  depts: [HOBBIES_1, HOBBIES_2, HOUSEHOLD_1, HOUSEHOLD_2, FOODS_1, FOODS_2, FOODS_3]
+
+  grid2_colnm: [sell_price, price_max, price_min, price_std, price_mean, price_norm,
+                price_nunique, item_nunique, price_momentum, price_momentum_m, price_momentum_y]
+
+  grid3_colnm: [event_name_1, event_type_1, event_name_2, event_type_2,
+                snap_CA, snap_TX, snap_WI, tm_d, tm_w, tm_m, tm_y, tm_wm, tm_dw, tm_w_end]
+
+  lag_colnm: [sales_lag_28, sales_lag_29, sales_lag_30, sales_lag_31, sales_lag_32,
+              sales_lag_33, sales_lag_34, sales_lag_35, sales_lag_36, sales_lag_37,
+              sales_lag_38, sales_lag_39, sales_lag_40, sales_lag_41, sales_lag_42,
+              rolling_mean_7, rolling_std_7, rolling_mean_14, rolling_std_14,
+              rolling_mean_30, rolling_std_30, rolling_mean_60, rolling_std_60,
+              rolling_mean_180, rolling_std_180]
+
+  validation:
+    cv1: [1551, 1610]
+    cv2: [1829, 1857]
+    cv3: [1857, 1885]
+    cv4: [1885, 1913]
+    public: [1913, 1941]
+    private: [1941, 1969]
+
+  # Explicitly keyed by level name -- not inferred from column existence.
+  # Each level drops its own grouping key(s), which become constant within
+  # that training subset and would otherwise be redundant/leaky features.
+  remove_feature_by_level:
+    store:      [id, state_id, store_id, date, wm_yr_wk, d, sales]
+    store_cat:  [id, state_id, store_id, cat_id, date, wm_yr_wk, d, sales]
+    store_dept: [id, state_id, store_id, dept_id, cat_id, date, wm_yr_wk, d, sales]
+
+  # Mean-encoding columns used at each level -- chosen to add information the
+  # level's own grouping key doesn't already capture.
+  mean_enc_by_level:
+    store:      [enc_store_id_dept_id_mean, enc_store_id_dept_id_std,
+                 enc_item_id_state_id_mean, enc_item_id_state_id_std]
+    store_cat:  [enc_store_id_dept_id_mean, enc_store_id_dept_id_std,
+                 enc_item_id_store_id_mean, enc_item_id_store_id_std]
+    store_dept: [enc_item_id_store_id_mean, enc_item_id_store_id_std]
+
+LIGHTGBM:
+  # Exact hyperparameters from A1's original notebooks, unchanged
+  boosting_type: gbdt
+  objective: tweedie
+  tweedie_variance_power: 1.1
+  metric: rmse
+  subsample: 0.5
+  subsample_freq: 1
+  learning_rate: 0.015
+  num_leaves: 255        # 2**8 - 1
+  min_data_in_leaf: 255  # 2**8 - 1
+  feature_fraction: 0.5
+  max_bin: 100
+  n_estimators: 3000
+  boost_from_average: false
+  verbose: -1
+  seed: 1995
+
+RECURSIVE_TRAINING:
+  end_train: 1941  # A1's END_TRAIN = 1941 - 28*KKK, KKK=0 for 'private' fold
+  p_horizon: 28
+  ver: "1"
+  early_stopping_rounds: 100   # set to match whatever you used for non-recursive
+
+  stores: [CA_1, CA_2, CA_3, CA_4, TX_1, TX_2, TX_3, WI_1, WI_2, WI_3]
+  cats: [HOBBIES, HOUSEHOLD, FOODS]
+  depts: [HOBBIES_1, HOBBIES_2, HOUSEHOLD_1, HOUSEHOLD_2, FOODS_1, FOODS_2, FOODS_3]
+
+  # Each level starts training from a different day in A1's original code
+  start_train_by_level:
+    store: 0
+    store_cat: 700
+    store_dept: 710
+
+  # Reused as-is from NONRECURSIVE_TRAINING -- confirmed identical across
+  # A1's recursive and non-recursive notebooks at every level
+  remove_feature_by_level:
+    store:      [id, state_id, store_id, date, wm_yr_wk, d, sales]
+    store_cat:  [id, state_id, store_id, cat_id, date, wm_yr_wk, d, sales]
+    store_dept: [id, state_id, store_id, dept_id, cat_id, date, wm_yr_wk, d, sales]
+
+  # DIFFERENT from non-recursive at the store level (single-column
+  # groupings instead of compound) -- store_cat/store_dept match
+  # non-recursive exactly.
+  mean_enc_by_level:
+    store:      [enc_cat_id_mean, enc_cat_id_std,
+                 enc_dept_id_mean, enc_dept_id_std,
+                 enc_item_id_mean, enc_item_id_std]
+    store_cat:  [enc_store_id_dept_id_mean, enc_store_id_dept_id_std,
+                 enc_item_id_store_id_mean, enc_item_id_store_id_std]
+    store_dept: [enc_item_id_store_id_mean, enc_item_id_store_id_std]
+
+  # Store level uses much bigger trees than store_cat/store_dept in A1's
+  # original code -- kept as two separate dicts rather than one shared set.
+  lgb_params_store:
+    boosting_type: gbdt
+    objective: tweedie
+    tweedie_variance_power: 1.1
+    metric: rmse
+    subsample: 0.5
+    subsample_freq: 1
+    learning_rate: 0.015
+    num_leaves: 2047        # 2**11 - 1
+    min_data_in_leaf: 4095  # 2**12 - 1
+    feature_fraction: 0.5
+    max_bin: 100
+    n_estimators: 3000
+    boost_from_average: false
+    verbose: -1
+    seed: 42
+
+  lgb_params_default:   # used for store_cat and store_dept levels
+    boosting_type: gbdt
+    objective: tweedie
+    tweedie_variance_power: 1.1
+    metric: rmse
+    subsample: 0.5
+    subsample_freq: 1
+    learning_rate: 0.015
+    num_leaves: 255
+    min_data_in_leaf: 255
+    feature_fraction: 0.5
+    max_bin: 100
+    n_estimators: 3000
+    boost_from_average: false
+    verbose: -1
+    seed: 42
