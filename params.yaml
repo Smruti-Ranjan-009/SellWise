@@ -1,7 +1,6 @@
 NONRECURSIVE_TRAINING:
   first_day: 710
-  cv: private
-  early_stopping_rounds: 100   # A1 also had cv1-cv4/public folds available; only 'private' (final 28 days) is used by default
+  cv: private   # A1 also had cv1-cv4/public folds available; only 'private' (final 28 days) is used by default
 
   stores: [CA_1, CA_2, CA_3, CA_4, TX_1, TX_2, TX_3, WI_1, WI_2, WI_3]
   cats: [HOBBIES, HOUSEHOLD, FOODS]
@@ -64,7 +63,7 @@ LIGHTGBM:
   seed: 1995
 
 RECURSIVE_TRAINING:
-  end_train: 1941  # A1's END_TRAIN = 1941 - 28*KKK, KKK=0 for 'private' fold
+  end_train: 1941   # A1's END_TRAIN = 1941 - 28*KKK, KKK=0 for 'private' fold
   p_horizon: 28
   ver: "1"
   early_stopping_rounds: 100   # set to match whatever you used for non-recursive
@@ -132,3 +131,19 @@ RECURSIVE_TRAINING:
     boost_from_average: false
     verbose: -1
     seed: 42
+
+  # Only used by prediction: shift/window pairs for the dynamic
+  # rolling_mean_tmp_* recomputation during recursive day-by-day prediction.
+  rols_split:
+    - [1, 7]
+    - [1, 14]
+    - [1, 30]
+    - [1, 60]
+    - [7, 7]
+    - [7, 14]
+    - [7, 30]
+    - [7, 60]
+    - [14, 7]
+    - [14, 14]
+    - [14, 30]
+    - [14, 60]

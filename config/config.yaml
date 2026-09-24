@@ -11,6 +11,7 @@ data_ingestion:
   calendar_path: artifacts/data_ingestion/dataset/calendar.csv
   sell_prices_path: artifacts/data_ingestion/dataset/sell_prices.csv
   sales_path: artifacts/data_ingestion/dataset/sales_train_evaluation.csv
+  sample_submission_path: artifacts/data_ingestion/dataset/sample_submission.csv
 
 
 data_preprocessing:
@@ -35,3 +36,10 @@ fleet_trainer:
   root_dir: artifacts/model_trainer
   processed_data_dir: artifacts/data_ingestion/processed
   models_dir: artifacts/model_trainer/models
+
+
+
+predictor:
+  root_dir: artifacts/model_evaluation
+  submission_dir: artifacts/model_evaluation/submissions
+
