@@ -3,7 +3,7 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: https://www.dropbox.com/scl/fi/7cnynmgerzpgsab8pqltg/dataset.zip?rlkey=yjvflm222gvbzp4tywprhlfjw&st=39odwnj3&dl=1
+  source_URL: https://www.dropbox.com/scl/fi/gdrhvm3pb3o7ogoj2czpe/dataset.zip?rlkey=uoseo1b07hssdfow5fnszvcwi&st=lvxaa4d4&dl=1
   local_data_file: artifacts/data_ingestion/data.zip
   unzip_dir: artifacts/data_ingestion
   # After unzip, verify these actually match where your CSVs land —
