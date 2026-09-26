@@ -43,3 +43,11 @@ predictor:
   root_dir: artifacts/model_evaluation
   submission_dir: artifacts/model_evaluation/submissions
 
+
+
+model_evaluation:
+  root_dir: artifacts/model_evaluation
+  sales_test_evaluation_path: artifacts/data_ingestion/dataset/sales_test_evaluation.csv
+  final_submission_path: artifacts/model_evaluation/submissions/submission_final.csv
+  metric_file_name: artifacts/model_evaluation/metrics.json
+
