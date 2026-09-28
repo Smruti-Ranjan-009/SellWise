@@ -71,6 +71,8 @@ python main.py
 
 ## Forecast Dashboard
 
+**Live demo:** [SellWise Forecast Console](https://sellwise-tjdcw6feb5vtfqfmj49yxm.streamlit.app/)
+
 After generating `artifacts/model_evaluation/submissions/submission_final.csv`, run the API and dashboard in separate terminals:
 
 ```bash
@@ -95,7 +97,7 @@ Deploy `dashboard/streamlit_app.py` on Community Cloud. Its adjacent `dashboard/
 SELLWISE_API_URL = "https://your-api-name.onrender.com"
 ```
 
-The serving artifacts are normally ignored with the rest of `artifacts/`; `.gitignore` now allows only the calendar, final forecast, and metrics files through. Include those three files in the GitHub commit used for deployment. Render and Community Cloud can redeploy from GitHub changes; a GitHub Actions CI workflow has not been added yet.
+The serving artifacts are normally ignored with the rest of `artifacts/`; `.gitignore` now allows only the calendar, final forecast, and metrics files through. Include those three files in the GitHub commit used for deployment. Render and Community Cloud can redeploy from GitHub changes. The GitHub Actions CI workflow runs API smoke tests on pushes and pull requests.
 
 ## 🧠 Model Insights & Best Practices
 
