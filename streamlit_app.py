@@ -6,7 +6,13 @@ import requests
 import streamlit as st
 
 
-API_URL = os.getenv("SELLWISE_API_URL", "http://127.0.0.1:8000").rstrip("/")
+API_URL = os.getenv("SELLWISE_API_URL")
+if not API_URL:
+    try:
+        API_URL = st.secrets["SELLWISE_API_URL"]
+    except (FileNotFoundError, KeyError):
+        API_URL = "http://127.0.0.1:8000"
+API_URL = API_URL.rstrip("/")
 STATE_NAMES = {"CA": "California", "TX": "Texas", "WI": "Wisconsin"}
 
 

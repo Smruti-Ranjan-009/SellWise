@@ -85,6 +85,18 @@ Open the Streamlit URL printed by the command (normally `http://localhost:8501`)
 
 The API reads the forecast, calendar, and metrics from the default `artifacts/` paths. Override them with `SELLWISE_FORECAST_PATH`, `SELLWISE_CALENDAR_PATH`, and `SELLWISE_METRICS_PATH`; set `SELLWISE_API_URL` if the dashboard needs to connect to a non-default API address.
 
+## Free Demo Deployment
+
+For a low-traffic demo, deploy the FastAPI service to Render and the dashboard to Streamlit Community Cloud. The API uses `requirements-api.txt`; configure Render with build command `pip install -r requirements-api.txt` and start command `uvicorn app:app --host 0.0.0.0 --port $PORT`.
+
+Deploy `dashboard/streamlit_app.py` on Community Cloud. Its adjacent `dashboard/requirements.txt` keeps the dashboard dependencies separate from the training environment. In the app's Secrets settings, set:
+
+```toml
+SELLWISE_API_URL = "https://your-api-name.onrender.com"
+```
+
+The serving artifacts are normally ignored with the rest of `artifacts/`; `.gitignore` now allows only the calendar, final forecast, and metrics files through. Include those three files in the GitHub commit used for deployment. Render and Community Cloud can redeploy from GitHub changes; a GitHub Actions CI workflow has not been added yet.
+
 ## 🧠 Model Insights & Best Practices
 
 *   **Tweedie Objective:** The models use the `tweedie` objective (`tweedie_variance_power: 1.1`) to naturally handle zero-inflated sales distributions (days where an item sells 0 units).

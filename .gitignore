@@ -217,4 +217,15 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-artifacts/
+artifacts/*
+!artifacts/data_ingestion/
+artifacts/data_ingestion/*
+!artifacts/data_ingestion/dataset/
+artifacts/data_ingestion/dataset/*
+!artifacts/data_ingestion/dataset/calendar.csv
+!artifacts/model_evaluation/
+artifacts/model_evaluation/*
+!artifacts/model_evaluation/metrics.json
+!artifacts/model_evaluation/submissions/
+artifacts/model_evaluation/submissions/*
+!artifacts/model_evaluation/submissions/submission_final.csv

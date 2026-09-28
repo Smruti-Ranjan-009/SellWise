@@ -1,0 +1,15 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements-api.txt .
+RUN pip install --no-cache-dir -r requirements-api.txt
+
+COPY app.py .
+COPY artifacts/model_evaluation/metrics.json artifacts/model_evaluation/metrics.json
+COPY artifacts/model_evaluation/submissions/submission_final.csv artifacts/model_evaluation/submissions/submission_final.csv
+COPY artifacts/data_ingestion/dataset/calendar.csv artifacts/data_ingestion/dataset/calendar.csv
+
+ENV PORT=8080
+
+CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT}"]
