@@ -31,6 +31,8 @@ fastapi
 uvicorn[standard]   # ASGI server to actually run app.py
 jinja2              # needed for FastAPI to render templates/index.html (not bundled, unlike Flask)
 python-multipart    # needed if index.html posts form data (e.g. store_id/item_id inputs) to app.py
+streamlit           # forecast dashboard UI
+requests            # Streamlit-to-FastAPI HTTP client
 
 # --- installs this project's own src/mlProject package in editable mode ---
 -e .

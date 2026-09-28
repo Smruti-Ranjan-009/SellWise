@@ -69,6 +69,22 @@ python main.py
 ```
 *(Alternatively, you can run specific stages using the modular pipeline scripts in `src/pipeline/`)*
 
+## Forecast Dashboard
+
+After generating `artifacts/model_evaluation/submissions/submission_final.csv`, run the API and dashboard in separate terminals:
+
+```bash
+uvicorn app:app --reload
+```
+
+```bash
+streamlit run streamlit_app.py
+```
+
+Open the Streamlit URL printed by the command (normally `http://localhost:8501`). The API documentation is available at `http://127.0.0.1:8000/docs`. The dashboard filters the saved 28-day ensemble forecast by store, category, item, and date, and displays the saved WRMSSE metrics. It does not start training or inference jobs.
+
+The API reads the forecast, calendar, and metrics from the default `artifacts/` paths. Override them with `SELLWISE_FORECAST_PATH`, `SELLWISE_CALENDAR_PATH`, and `SELLWISE_METRICS_PATH`; set `SELLWISE_API_URL` if the dashboard needs to connect to a non-default API address.
+
 ## 🧠 Model Insights & Best Practices
 
 *   **Tweedie Objective:** The models use the `tweedie` objective (`tweedie_variance_power: 1.1`) to naturally handle zero-inflated sales distributions (days where an item sells 0 units).
